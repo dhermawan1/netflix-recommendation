@@ -1,6 +1,6 @@
 # Netflix-Style Movie Recommendation System
 
-A production-style movie recommendation system built using **PyTorch**, **FastAPI**, and **Embedding-based Collaborative Filtering**. This project demonstrates an end-to-end Machine Learning Engineering workflow, from data generation and model training to serving recommendations via a REST API.
+This is a movie recommendation system built using **PyTorch**, **FastAPI**, and **Embedding-based Collaborative Filtering**. This project demonstrates an end-to-end Machine Learning Engineering workflow, from data generation and model training to serving recommendations via a REST API.
 
 ## Features
 
@@ -101,7 +101,7 @@ The core model `RecommenderNet` learns low-dimensional representations (embeddin
 - **Loss Function**: Mean Squared Error (MSE) against actual ratings.
 - **Optimizer**: Adam.
 
-## 🔧 Configuration
+## Configuration
 
 You can adjust hyperparameters and file paths in `src/config.py`:
 
@@ -111,7 +111,7 @@ You can adjust hyperparameters and file paths in `src/config.py`:
 - `EPOCHS`
 - `LEARNING_RATE`
 
-## 🐳 Docker (Optional)
+## Docker (Optional)
 
 Build and run the containerized application:
 

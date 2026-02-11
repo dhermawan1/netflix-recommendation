@@ -96,8 +96,8 @@ if __name__ == "__main__":
         recommendations = recommend_movies(user_id_to_test)
         
         if recommendations:
-            for title, genre, rating in recommendations:
-                print(f"Recommend: '{title}' ({genre}) - Predicted Rating: {rating:.2f}")
+            for rec in recommendations:
+                print(f"Recommend: '{rec['title']}' ({rec['genre']}) - Predicted Rating: {rec['rating']:.2f}")
         else:
             print("No movies left to recommend!")
     except Exception as e:

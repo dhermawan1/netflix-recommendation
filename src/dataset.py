@@ -1,71 +1,83 @@
 import torch
 import pandas as pd
 import numpy as np
-from src.config import NUM_USERS, NUM_RATINGS
+import os
+import json
+from src.config import NUM_USERS, NUM_RATINGS, MOVIES_CSV, RATINGS_CSV, GENRE_MAP
 
 def generate_dummy_data():
     """
     Simulates a real-world scenario by creating a small dataset with users, movies, and ratings.
+    If data files already exist, load them instead of regenerating.
     """
     
+    if os.path.exists(MOVIES_CSV) and os.path.exists(RATINGS_CSV) and os.path.exists(GENRE_MAP):
+        print("Loading existing data from disk...")
+        movies_df = pd.read_csv(MOVIES_CSV)
+        ratings_df = pd.read_csv(RATINGS_CSV)
+        with open(GENRE_MAP, "r") as f:
+            genre_to_idx = json.load(f)
+        return movies_df, ratings_df, genre_to_idx
+
+    print("Generating new dummy data...")
     # Set seed for reproducibility
     torch.manual_seed(42)
     np.random.seed(42)
 
-    # 1. Define dummy movies with IDs
-    movies_data = [
-        (0, "The Matrix", "Action"),
-        (1, "Inception", "Sci-Fi"),
-        (2, "The Godfather", "Crime"),
-        (3, "Toy Story", "Animation"),
-        (4, "Pulp Fiction", "Crime"),
-        (5, "The Dark Knight", "Action"),
-        (6, "Interstellar", "Sci-Fi"),
-        (7, "Forrest Gump", "Drama"),
-        (8, "Frozen", "Animation"),
-        (9, "Avengers: Endgame", "Action"),
-        (10, "The Shawshank Redemption", "Drama"),
-        (11, "Gladiator", "Action"),
-        (12, "Spirited Away", "Animation"),
-        (13, "Parasite", "Thriller"),
-        (14, "The Lion King", "Animation"),
-        (15, "Fight Club", "Drama"),
-        (16, "Blade Runner 2049", "Sci-Fi"),
-        (17, "Joker", "Crime"),
-        (18, "Spider-Man: Into the Spider-Verse", "Animation"),
-        (19, "The Silence of the Lambs", "Thriller"),
-        (20, "Star Wars: A New Hope", "Sci-Fi"),
-        (21, "Saving Private Ryan", "War"),
-        (22, "Jurassic Park", "Adventure"),
-        (23, "The Lord of the Rings: The Fellowship of the Ring", "Adventure"),
-        (24, "Coco", "Animation"),
-        (25, "The Departed", "Crime"),
-        (26, "The Shining", "Horror"),
-        (27, "Goodfellas", "Crime"),
-        (28, "Alien", "Sci-Fi"),
-        (29, "The Prestige", "Drama"),
-        (30, "Memento", "Mystery"),
-        (31, "Seven", "Thriller"),
-        (32, "Mad Max: Fury Road", "Action"),
-        (33, "Logan", "Action"),
-        (34, "Your Name", "Animation"),
-        (35, "Arrival", "Sci-Fi"),
-        (36, "The Wolf of Wall Street", "Biography"),
-        (37, "Whiplash", "Drama"),
-        (38, "Django Unchained", "Western"),
-        (39, "Inglourious Basterds", "War"),
-        (40, "La La Land", "Romance"),
-        (41, "The Grand Budapest Hotel", "Comedy"),
-        (42, "The Truman Show", "Comedy"),
-        (43, "A Clockwork Orange", "Sci-Fi"),
-        (44, "Psycho", "Horror"),
-        (45, "No Country for Old Men", "Crime"),
-        (46, "Up", "Animation"),
-        (47, "Terminator 2: Judgment Day", "Action"),
-        (48, "Back to the Future", "Sci-Fi"),
-        (49, "Heat", "Crime")
-    ]
-    movies_df = pd.DataFrame(movies_data, columns=['movie_id', 'title', 'genre'])
+    # # 1. Define dummy movies with IDs
+    # movies_data = [
+    #     (0, "The Matrix", "Action"),
+    #     (1, "Inception", "Sci-Fi"),
+    #     (2, "The Godfather", "Crime"),
+    #     (3, "Toy Story", "Animation"),
+    #     (4, "Pulp Fiction", "Crime"),
+    #     (5, "The Dark Knight", "Action"),
+    #     (6, "Interstellar", "Sci-Fi"),
+    #     (7, "Forrest Gump", "Drama"),
+    #     (8, "Frozen", "Animation"),
+    #     (9, "Avengers: Endgame", "Action"),
+    #     (10, "The Shawshank Redemption", "Drama"),
+    #     (11, "Gladiator", "Action"),
+    #     (12, "Spirited Away", "Animation"),
+    #     (13, "Parasite", "Thriller"),
+    #     (14, "The Lion King", "Animation"),
+    #     (15, "Fight Club", "Drama"),
+    #     (16, "Blade Runner 2049", "Sci-Fi"),
+    #     (17, "Joker", "Crime"),
+    #     (18, "Spider-Man: Into the Spider-Verse", "Animation"),
+    #     (19, "The Silence of the Lambs", "Thriller"),
+    #     (20, "Star Wars: A New Hope", "Sci-Fi"),
+    #     (21, "Saving Private Ryan", "War"),
+    #     (22, "Jurassic Park", "Adventure"),
+    #     (23, "The Lord of the Rings: The Fellowship of the Ring", "Adventure"),
+    #     (24, "Coco", "Animation"),
+    #     (25, "The Departed", "Crime"),
+    #     (26, "The Shining", "Horror"),
+    #     (27, "Goodfellas", "Crime"),
+    #     (28, "Alien", "Sci-Fi"),
+    #     (29, "The Prestige", "Drama"),
+    #     (30, "Memento", "Mystery"),
+    #     (31, "Seven", "Thriller"),
+    #     (32, "Mad Max: Fury Road", "Action"),
+    #     (33, "Logan", "Action"),
+    #     (34, "Your Name", "Animation"),
+    #     (35, "Arrival", "Sci-Fi"),
+    #     (36, "The Wolf of Wall Street", "Biography"),
+    #     (37, "Whiplash", "Drama"),
+    #     (38, "Django Unchained", "Western"),
+    #     (39, "Inglourious Basterds", "War"),
+    #     (40, "La La Land", "Romance"),
+    #     (41, "The Grand Budapest Hotel", "Comedy"),
+    #     (42, "The Truman Show", "Comedy"),
+    #     (43, "A Clockwork Orange", "Sci-Fi"),
+    #     (44, "Psycho", "Horror"),
+    #     (45, "No Country for Old Men", "Crime"),
+    #     (46, "Up", "Animation"),
+    #     (47, "Terminator 2: Judgment Day", "Action"),
+    #     (48, "Back to the Future", "Sci-Fi"),
+    #     (49, "Heat", "Crime")
+    # ]
+    # movies_df = pd.DataFrame(movies_data, columns=['movie_id', 'title', 'genre'])
 
     # 2. Generate random ratings
     num_users = NUM_USERS
