@@ -40,7 +40,7 @@ netflix-recommendation/
     pip install -r requirements.txt
     ```
 
-## 🏃Usage
+## Usage
 
 ### 1. Train the Model and Generate Data
 
@@ -87,7 +87,7 @@ curl http://127.0.0.1:8000/recommend/0
 **Interactive Documentation:**
 Visit [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to test the endpoints using the Swagger UI.
 
-## 🧠 Model Architecture
+## Model Architecture
 
 The core model `RecommenderNet` learns low-dimensional representations (embeddings) for Users, Movies, and Genres.
 
