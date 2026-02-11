@@ -1,0 +1,51 @@
+movie_id,title,genre,genre_id
+0,The Matrix,Action,0
+1,Inception,Sci-Fi,1
+2,The Godfather,Crime,2
+3,Toy Story,Animation,3
+4,Pulp Fiction,Crime,2
+5,The Dark Knight,Action,0
+6,Interstellar,Sci-Fi,1
+7,Forrest Gump,Drama,4
+8,Frozen,Animation,3
+9,Avengers: Endgame,Action,0
+10,The Shawshank Redemption,Drama,4
+11,Gladiator,Action,0
+12,Spirited Away,Animation,3
+13,Parasite,Thriller,5
+14,The Lion King,Animation,3
+15,Fight Club,Drama,4
+16,Blade Runner 2049,Sci-Fi,1
+17,Joker,Crime,2
+18,Spider-Man: Into the Spider-Verse,Animation,3
+19,The Silence of the Lambs,Thriller,5
+20,Star Wars: A New Hope,Sci-Fi,1
+21,Saving Private Ryan,War,6
+22,Jurassic Park,Adventure,7
+23,The Lord of the Rings: The Fellowship of the Ring,Adventure,7
+24,Coco,Animation,3
+25,The Departed,Crime,2
+26,The Shining,Horror,8
+27,Goodfellas,Crime,2
+28,Alien,Sci-Fi,1
+29,The Prestige,Drama,4
+30,Memento,Mystery,9
+31,Seven,Thriller,5
+32,Mad Max: Fury Road,Action,0
+33,Logan,Action,0
+34,Your Name,Animation,3
+35,Arrival,Sci-Fi,1
+36,The Wolf of Wall Street,Biography,10
+37,Whiplash,Drama,4
+38,Django Unchained,Western,11
+39,Inglourious Basterds,War,6
+40,La La Land,Romance,12
+41,The Grand Budapest Hotel,Comedy,13
+42,The Truman Show,Comedy,13
+43,A Clockwork Orange,Sci-Fi,1
+44,Psycho,Horror,8
+45,No Country for Old Men,Crime,2
+46,Up,Animation,3
+47,Terminator 2: Judgment Day,Action,0
+48,Back to the Future,Sci-Fi,1
+49,Heat,Crime,2

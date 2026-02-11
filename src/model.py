@@ -1,24 +1,27 @@
 import torch
 import torch.nn as nn
 
-class RecommenderModel(nn.Module):
-    def __init__(self, num_users, num_movies, embedding_dim=32):
-        super().__init__()
+class RecommenderNet(nn.Module):
+    def __init__(self, num_users, num_movies, num_genres, embedding_size=16):
+        super(RecommenderNet, self).__init__()
+        # Embeddings: A lookup table that stores embeddings of a fixed dictionary and size.
+        self.user_embedding = nn.Embedding(num_users, embedding_size)
+        self.movie_embedding = nn.Embedding(num_movies, embedding_size)
+        self.genre_embedding = nn.Embedding(num_genres, embedding_size)
+        
+    def forward(self, user_indices, movie_indices, genre_indices):
+        # Retrieve embeddings for the specific users and movies in the batch
+        user_embed = self.user_embedding(user_indices)
+        movie_embed = self.movie_embedding(movie_indices)
+        genre_embed = self.genre_embedding(genre_indices)
+        
+        # Dot product: Multiply vectors and sum across the embedding dimension
+        # We add the genre embedding to the movie embedding to enrich the item representation
+        # Shape: (Batch_Size, Embedding_Size) -> (Batch_Size)
 
-        self.user_embedding = nn.Embedding(num_users+1, embedding_dim)
-        self.movie_embedding = nn.Embedding(num_movies+1, embedding_dim)
+        predicted_rating = (user_embed * (movie_embed + genre_embed)).sum(dim=1)
 
-        self.fc1 = nn.Linear(embedding_dim*2, 128)
-        self.fc2 = nn.Linear(128, 1)
+        # score = torch.sum(user_embed * (movie_embed + genre_embed), dim=1)
+        # predicted_rating = torch.sigmoid(score) * 4 + 1
 
-        self.relu = nn.ReLU()
-
-    def forward(self, user, movie):
-        user_vec = self.user_embedding(user)
-        movie_vec = self.movie_embedding(movie)
-
-        x = torch.cat([user_vec, movie_vec], dim=1)
-        x = self.relu(self.fc1(x))
-        x = self.fc2(x)
-
-        return x.squeeze()
+        return predicted_rating
